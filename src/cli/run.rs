@@ -64,7 +64,7 @@ pub struct Run {
     pub task: String,
 
     /// Arguments to pass to the task. Use ":::" to separate tasks.
-    #[clap()]
+    #[clap(trailing_var_arg = true, verbatim_doc_comment)]
     pub args: Vec<String>,
 
     /// Change to this directory before executing the command

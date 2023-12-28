@@ -1,0 +1,25 @@
+name "rtx"
+bin "rtx"
+flag "--debug" help="Sets log level to debug" hide=true global=true
+flag "--log-level" help="Set the log output verbosity" hide=true global=true {
+    arg "<LEVEL>"
+}
+flag "--trace" help="Sets log level to trace" hide=true global=true
+flag "-C,--cd" help="Change directory before running command" global=true {
+    arg "<DIR>"
+}
+flag "-q,--quiet" help="Suppress non-error messages" global=true
+flag "-v,--verbose" help="Show extra output (use -vv for even more)" var=true global=true count=true
+flag "-y,--yes" help="Answer yes to all confirmation prompts" global=true
+cmd "activate" {
+    flag "-s,--shell" help="Shell type to generate the script for" hide=true {
+        arg "<SHELL>"
+    }
+    flag "--status" help="Show \"rtx: <PLUGIN>@<VERSION>\" message when changing directories"
+    flag "-q,--quiet" help="Suppress non-error messages"
+    arg "[SHELL_TYPE]" help="Shell type to generate the script for"
+}
+cmd "render-completion" hide=true
+cmd "render-help" hide=true
+cmd "render-mangen" hide=true
+

@@ -115,11 +115,13 @@ render-help: build
     #npx markdown-magic
     md-magic
 
+render-usage:
+    rtx --USAGE > rtx.usage.kdl
 # regenerate shell completion files
-render-completions: build
-    NO_COLOR=1 rtx render-completion bash > completions/rtx.bash
-    NO_COLOR=1 rtx render-completion zsh > completions/_rtx
-    NO_COLOR=1 rtx render-completion fish > completions/rtx.fish
+render-completions: build render-usage
+    NO_COLOR=1 rtx usage g complete bash -f rtx.usage.kdl > completions/rtx.bash
+    NO_COLOR=1 rtx usage g complete fish -f rtx.usage.kdl > completions/rtx.fish
+    NO_COLOR=1 rtx render-completion > completions/_rtx
 
 # regenerate manpages
 render-mangen: build

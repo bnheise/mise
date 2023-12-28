@@ -1,408 +1,431 @@
-set -l fssf "__fish_seen_subcommand_from"
-
-# rtx
-complete -kxc rtx -s C -l cd -a "(__fish_complete_directories)" -d 'Change directory before running command'
-complete -kxc rtx -s q -l quiet -d 'Suppress non-error messages'
-complete -kxc rtx -s v -l verbose -d 'Show extra output (use -vv for even more)'
-complete -kxc rtx -s y -l yes -d 'Answer yes to all confirmation prompts'
-set -l others activate alias bin-paths cache completion config current deactivate direnv doctor env env-vars exec implode install latest link ls ls-remote outdated plugins prune reshim run self-update settings shell sync task trust uninstall upgrade use version watch where which
-complete -xc rtx -n "not $fssf $others" -a activate -d 'Initializes rtx in the current shell session'
-complete -xc rtx -n "not $fssf $others" -a alias -d 'Manage aliases'
-complete -xc rtx -n "not $fssf $others" -a bin-paths -d 'List all the active runtime bin paths'
-complete -xc rtx -n "not $fssf $others" -a cache -d 'Manage the rtx cache'
-complete -xc rtx -n "not $fssf $others" -a completion -d 'Generate shell completions'
-complete -xc rtx -n "not $fssf $others" -a config -d '[experimental] Manage config files'
-complete -xc rtx -n "not $fssf $others" -a current -d 'Shows current active and installed runtime versions'
-complete -xc rtx -n "not $fssf $others" -a deactivate -d 'Disable rtx for current shell session'
-complete -xc rtx -n "not $fssf $others" -a direnv -d 'Output direnv function to use rtx inside direnv'
-complete -xc rtx -n "not $fssf $others" -a doctor -d 'Check rtx installation for possible problems.'
-complete -xc rtx -n "not $fssf $others" -a env -d 'Exports env vars to activate rtx a single time'
-complete -xc rtx -n "not $fssf $others" -a env-vars -d 'Manage environment variables'
-complete -xc rtx -n "not $fssf $others" -a exec -d 'Execute a command with tool(s) set'
-complete -xc rtx -n "not $fssf $others" -a implode -d 'Removes rtx CLI and all related data'
-complete -xc rtx -n "not $fssf $others" -a install -d 'Install a tool version'
-complete -xc rtx -n "not $fssf $others" -a latest -d 'Gets the latest available version for a plugin'
-complete -xc rtx -n "not $fssf $others" -a link -d 'Symlinks a tool version into rtx'
-complete -xc rtx -n "not $fssf $others" -a ls -d 'List installed and/or currently selected tool versions'
-complete -xc rtx -n "not $fssf $others" -a ls-remote -d 'List runtime versions available for install'
-complete -xc rtx -n "not $fssf $others" -a outdated -d 'Shows outdated tool versions'
-complete -xc rtx -n "not $fssf $others" -a plugins -d 'Manage plugins'
-complete -xc rtx -n "not $fssf $others" -a prune -d 'Delete unused versions of tools'
-complete -xc rtx -n "not $fssf $others" -a reshim -d 'rebuilds the shim farm'
-complete -xc rtx -n "not $fssf $others" -a run -d '[experimental] Run a task'
-complete -xc rtx -n "not $fssf $others" -a self-update -d 'Updates rtx itself'
-complete -xc rtx -n "not $fssf $others" -a settings -d 'Manage settings'
-complete -xc rtx -n "not $fssf $others" -a shell -d 'Sets a tool version for the current shell session'
-complete -xc rtx -n "not $fssf $others" -a sync -d 'Add tool versions from external tools to rtx'
-complete -xc rtx -n "not $fssf $others" -a task -d '[experimental] Manage tasks'
-complete -xc rtx -n "not $fssf $others" -a trust -d 'Marks a config file as trusted'
-complete -xc rtx -n "not $fssf $others" -a uninstall -d 'Removes runtime versions'
-complete -xc rtx -n "not $fssf $others" -a upgrade -d 'Upgrades outdated tool versions'
-complete -xc rtx -n "not $fssf $others" -a use -d 'Change the active version of a tool locally or globally.'
-complete -xc rtx -n "not $fssf $others" -a version -d 'Show rtx version'
-complete -xc rtx -n "not $fssf $others" -a watch -d '[experimental] Run a task watching for changes'
-complete -xc rtx -n "not $fssf $others" -a where -d 'Display the installation path for a runtime'
-complete -xc rtx -n "not $fssf $others" -a which -d 'Shows the path that a bin name points to'
-
-# activate
-complete -kxc rtx -n "$fssf activate" -s q -l quiet -d 'Suppress non-error messages'
-complete -kxc rtx -n "$fssf activate" -a "bash fish nu xonsh zsh" -d 'Shell type to generate the script for'
-complete -kxc rtx -n "$fssf activate" -l status -d 'Show "rtx: <PLUGIN>@<VERSION>" message when changing directories'
-
-# alias
-complete -kxc rtx -n "$fssf alias" -l no-header -d 'Don'\''t show table header'
-complete -kxc rtx -n "$fssf alias" -s p -l plugin -a "(__rtx_plugins)" -d 'filter aliases by plugin'
-set -l others get ls set unset
-complete -xc rtx -n "$fssf alias; and not $fssf $others" -a get -d 'Show an alias for a plugin'
-complete -xc rtx -n "$fssf alias; and not $fssf $others" -a ls -d 'List aliases'
-complete -xc rtx -n "$fssf alias; and not $fssf $others" -a set -d 'Add/update an alias for a plugin'
-complete -xc rtx -n "$fssf alias; and not $fssf $others" -a unset -d 'Clears an alias for a plugin'
-
-# alias get
-complete -kxc rtx -n "$fssf alias; and $fssf get" -a "(__rtx_aliases)" -d 'The alias to show'
-complete -kxc rtx -n "$fssf alias; and $fssf get" -a "(__rtx_plugins)" -d 'The plugin to show the alias for'
-
-# alias ls
-complete -kxc rtx -n "$fssf alias; and $fssf ls" -l no-header -d 'Don'\''t show table header'
-complete -kxc rtx -n "$fssf alias; and $fssf ls" -a "(__rtx_plugins)" -d 'Show aliases for <PLUGIN>'
-
-# alias set
-complete -kxc rtx -n "$fssf alias; and $fssf set" -a "(__rtx_aliases)" -d 'The alias to set'
-complete -kxc rtx -n "$fssf alias; and $fssf set" -a "(__rtx_plugins)" -d 'The plugin to set the alias for'
-complete -kxc rtx -n "$fssf alias; and $fssf set" -d 'The value to set the alias to'
-
-# alias unset
-complete -kxc rtx -n "$fssf alias; and $fssf unset" -a "(__rtx_aliases)" -d 'The alias to remove'
-complete -kxc rtx -n "$fssf alias; and $fssf unset" -a "(__rtx_plugins)" -d 'The plugin to remove the alias from'
-
-
-# bin-paths
-
-# cache
-set -l others clear
-complete -xc rtx -n "$fssf cache; and not $fssf $others" -a clear -d 'Deletes all cache files in rtx'
-
-# cache clear
-complete -kxc rtx -n "$fssf cache; and $fssf clear" -a "(__rtx_plugins)" -d 'Plugin(s) to clear cache for e.g.: node, python'
-
-
-# completion
-complete -kxc rtx -n "$fssf completion" -a "bash fish zsh" -d 'Shell type to generate completions for'
-
-# config
-complete -kxc rtx -n "$fssf config" -l no-header -d 'Do not print table header'
-set -l others generate ls
-complete -xc rtx -n "$fssf config; and not $fssf $others" -a generate -d '[experimental] Generate an .rtx.toml file'
-complete -xc rtx -n "$fssf config; and not $fssf $others" -a ls -d '[experimental] List config files currently in use'
-
-# config generate
-complete -kxc rtx -n "$fssf config; and $fssf generate" -s o -l output -a "(__fish_complete_path)" -d 'Output to file instead of stdout'
-
-# config ls
-complete -kxc rtx -n "$fssf config; and $fssf ls" -l no-header -d 'Do not print table header'
-
-
-# current
-complete -kxc rtx -n "$fssf current" -a "(__rtx_plugins)" -d 'Plugin to show versions of e.g.: ruby, node'
-
-# deactivate
-
-# direnv
-set -l others activate
-complete -xc rtx -n "$fssf direnv; and not $fssf $others" -a activate -d 'Output direnv function to use rtx inside direnv'
-
-# direnv activate
-
-
-# doctor
-
-# env
-complete -kxc rtx -n "$fssf env" -s J -l json -d 'Output in JSON format'
-complete -kxc rtx -n "$fssf env" -s s -l shell -a "bash fish nu xonsh zsh" -d 'Shell type to generate environment variables for'
-complete -kxc rtx -n "$fssf env" -a "(__rtx_tool_versions)" -d 'Tool(s) to use'
-
-# env-vars
-complete -kxc rtx -n "$fssf env-vars" -d 'Environment variable(s) to set'
-complete -kxc rtx -n "$fssf env-vars" -l file -a "(__fish_complete_path)" -d 'The TOML file to update'
-complete -kxc rtx -n "$fssf env-vars" -l remove -d 'Remove the environment variable from config file'
-
-# exec
-complete -kxc rtx -n "$fssf exec" -s c -l command -d 'Command string to execute'
-complete -kxc rtx -n "$fssf exec" -d 'Command string to execute (same as --command)'
-complete -kxc rtx -n "$fssf exec" -s j -l jobs -d 'Number of jobs to run in parallel'
-complete -kxc rtx -n "$fssf exec" -l raw -d 'Directly pipe stdin/stdout/stderr from plugin to user Sets --jobs=1'
-complete -kxc rtx -n "$fssf exec" -a "(__rtx_tool_versions)" -d 'Tool(s) to start e.g.: node@20 python@3.10'
-
-# implode
-complete -kxc rtx -n "$fssf implode" -l config -d 'Also remove config directory'
-complete -kxc rtx -n "$fssf implode" -s n -l dry-run -d 'List directories that would be removed without actually removing them'
-
-# install
-complete -kxc rtx -n "$fssf install" -s f -l force -d 'Force reinstall even if already installed'
-complete -kxc rtx -n "$fssf install" -s j -l jobs -d 'Number of jobs to run in parallel'
-complete -kxc rtx -n "$fssf install" -l raw -d 'Directly pipe stdin/stdout/stderr from plugin to user Sets --jobs=1'
-complete -kxc rtx -n "$fssf install" -a "(__rtx_tool_versions)" -d 'Tool(s) to install e.g.: node@20'
-complete -kxc rtx -n "$fssf install" -s v -l verbose -d 'Show installation output'
-
-# latest
-complete -kxc rtx -n "$fssf latest" -s i -l installed -d 'Show latest installed instead of available version'
-complete -kxc rtx -n "$fssf latest" -a "(__rtx_tool_versions)" -d 'Tool to get the latest version of'
-
-# link
-complete -kxc rtx -n "$fssf link" -s f -l force -d 'Overwrite an existing tool version if it exists'
-complete -kxc rtx -n "$fssf link" -a "(__fish_complete_directories)" -d 'The local path to the tool version'
-complete -kxc rtx -n "$fssf link" -a "(__rtx_tool_versions)" -d 'Tool name and version to create a symlink for'
-
-# ls
-complete -kxc rtx -n "$fssf ls" -s c -l current -d 'Only show tool versions currently specified in a .tool-versions/.rtx.toml'
-complete -kxc rtx -n "$fssf ls" -s g -l global -d 'Only show tool versions currently specified in a the global .tool-versions/.rtx.toml'
-complete -kxc rtx -n "$fssf ls" -s i -l installed -d 'Only show tool versions that are installed Hides missing ones defined in .tool-versions/.rtx.toml but not yet installed'
-complete -kxc rtx -n "$fssf ls" -s J -l json -d 'Output in json format'
-complete -kxc rtx -n "$fssf ls" -s m -l missing -d 'Display missing tool versions'
-complete -kxc rtx -n "$fssf ls" -l no-header -d 'Don'\''t display headers'
-complete -kxc rtx -n "$fssf ls" -a "(__rtx_plugins)" -d 'Only show tool versions from [PLUGIN]'
-complete -kxc rtx -n "$fssf ls" -l prefix -d 'Display versions matching this prefix'
-
-# ls-remote
-complete -kxc rtx -n "$fssf ls-remote" -l all -d 'Show all installed plugins and versions'
-complete -kxc rtx -n "$fssf ls-remote" -a "(__rtx_plugins)" -d 'Plugin to get versions for'
-complete -kxc rtx -n "$fssf ls-remote" -d 'The version prefix to use when querying the latest version'
-
-# outdated
-complete -kxc rtx -n "$fssf outdated" -a "(__rtx_tool_versions)" -d 'Tool(s) to show outdated versions for'
-
-# plugins
-complete -kxc rtx -n "$fssf plugins" -s c -l core -d 'The built-in plugins only'
-complete -kxc rtx -n "$fssf plugins" -s u -l urls -d 'Show the git url for each plugin'
-complete -kxc rtx -n "$fssf plugins" -l user -d 'List installed plugins'
-set -l others install link ls ls-remote uninstall update
-complete -xc rtx -n "$fssf plugins; and not $fssf $others" -a install -d 'Install a plugin'
-complete -xc rtx -n "$fssf plugins; and not $fssf $others" -a link -d 'Symlinks a plugin into rtx'
-complete -xc rtx -n "$fssf plugins; and not $fssf $others" -a ls -d 'List installed plugins'
-complete -xc rtx -n "$fssf plugins; and not $fssf $others" -a ls-remote -d 'List all available remote plugins'
-complete -xc rtx -n "$fssf plugins; and not $fssf $others" -a uninstall -d 'Removes a plugin'
-complete -xc rtx -n "$fssf plugins; and not $fssf $others" -a update -d 'Updates a plugin to the latest version'
-
-# plugins install
-complete -kxc rtx -n "$fssf plugins; and $fssf install" -s a -l all -d 'Install all missing plugins'
-complete -kxc rtx -n "$fssf plugins; and $fssf install" -s f -l force -d 'Reinstall even if plugin exists'
-complete -kxc rtx -n "$fssf plugins; and $fssf install" -d 'The git url of the plugin'
-complete -kxc rtx -n "$fssf plugins; and $fssf install" -a "(__rtx_all_plugins)" -d 'The name of the plugin to install'
-complete -kxc rtx -n "$fssf plugins; and $fssf install" -s v -l verbose -d 'Show installation output'
-
-# plugins link
-complete -kxc rtx -n "$fssf plugins; and $fssf link" -s f -l force -d 'Overwrite existing plugin'
-complete -kxc rtx -n "$fssf plugins; and $fssf link" -d 'The name of the plugin'
-complete -kxc rtx -n "$fssf plugins; and $fssf link" -a "(__fish_complete_directories)" -d 'The local path to the plugin'
-
-# plugins ls
-complete -kxc rtx -n "$fssf plugins; and $fssf ls" -s c -l core -d 'The built-in plugins only'
-complete -kxc rtx -n "$fssf plugins; and $fssf ls" -s u -l urls -d 'Show the git url for each plugin'
-complete -kxc rtx -n "$fssf plugins; and $fssf ls" -l user -d 'List installed plugins'
-
-# plugins ls-remote
-complete -kxc rtx -n "$fssf plugins; and $fssf ls-remote" -l only-names -d 'Only show the name of each plugin by default it will show a "*" next to installed plugins'
-complete -kxc rtx -n "$fssf plugins; and $fssf ls-remote" -s u -l urls -d 'Show the git url for each plugin e.g.: https://github.com/rtx-plugins/rtx-nodejs.git'
-
-# plugins uninstall
-complete -kxc rtx -n "$fssf plugins; and $fssf uninstall" -s a -l all -d 'Remove all plugins'
-complete -kxc rtx -n "$fssf plugins; and $fssf uninstall" -a "(__rtx_plugins)" -d 'Plugin(s) to remove'
-complete -kxc rtx -n "$fssf plugins; and $fssf uninstall" -s p -l purge -d 'Also remove the plugin'\''s installs, downloads, and cache'
-
-# plugins update
-complete -kxc rtx -n "$fssf plugins; and $fssf update" -s j -l jobs -d 'Number of jobs to run in parallel'
-complete -kxc rtx -n "$fssf plugins; and $fssf update" -a "(__rtx_plugins)" -d 'Plugin(s) to update'
-
-
-# prune
-complete -kxc rtx -n "$fssf prune" -s n -l dry-run -d 'Do not actually delete anything'
-complete -kxc rtx -n "$fssf prune" -a "(__rtx_plugins)" -d 'Prune only versions from these plugins'
-
-# reshim
-
-# run
-complete -kxc rtx -n "$fssf run" -d 'Arguments to pass to the task. Use ":::" to separate tasks'
-complete -kxc rtx -n "$fssf run" -s C -l cd -a "(__fish_complete_directories)" -d 'Change to this directory before executing the command'
-complete -kxc rtx -n "$fssf run" -s n -l dry-run -d 'Don'\''t actually run the task(s), just print them in order of execution'
-complete -kxc rtx -n "$fssf run" -s f -l force -d 'Force the task to run even if outputs are up to date'
-complete -kxc rtx -n "$fssf run" -s i -l interleave -d 'Print directly to stdout/stderr instead of by line'
-complete -kxc rtx -n "$fssf run" -s j -l jobs -d 'Number of tasks to run in parallel'
-complete -kxc rtx -n "$fssf run" -s p -l prefix -d 'Print stdout/stderr by line, prefixed with the task'\''s label'
-complete -kxc rtx -n "$fssf run" -s r -l raw -d 'Read/write directly to stdin/stdout/stderr instead of by line'
-complete -kxc rtx -n "$fssf run" -a "(__rtx_tasks)" -d 'Task to run'
-complete -kxc rtx -n "$fssf run" -s t -l tool -a "(__rtx_tool_versions)" -d 'Tool(s) to also add e.g.: node@20 python@3.10'
-
-# self-update
-complete -kxc rtx -n "$fssf self-update" -s f -l force -d 'Update even if already up to date'
-complete -kxc rtx -n "$fssf self-update" -l no-plugins -d 'Disable auto-updating plugins'
-complete -kxc rtx -n "$fssf self-update" -d 'Update to a specific version'
-complete -kxc rtx -n "$fssf self-update" -s y -l yes -d 'Skip confirmation prompt'
-
-# settings
-set -l others get ls set unset
-complete -xc rtx -n "$fssf settings; and not $fssf $others" -a get -d 'Show a current setting'
-complete -xc rtx -n "$fssf settings; and not $fssf $others" -a ls -d 'Show current settings'
-complete -xc rtx -n "$fssf settings; and not $fssf $others" -a set -d 'Add/update a setting'
-complete -xc rtx -n "$fssf settings; and not $fssf $others" -a unset -d 'Clears a setting'
-
-# settings get
-complete -kxc rtx -n "$fssf settings; and $fssf get" -a "(__rtx_settings)" -d 'The setting to show'
-
-# settings ls
-
-# settings set
-complete -kxc rtx -n "$fssf settings; and $fssf set" -a "(__rtx_settings)" -d 'The setting to set'
-complete -kxc rtx -n "$fssf settings; and $fssf set" -d 'The value to set'
-
-# settings unset
-complete -kxc rtx -n "$fssf settings; and $fssf unset" -a "(__rtx_settings)" -d 'The setting to remove'
-
-
-# shell
-complete -kxc rtx -n "$fssf shell" -s j -l jobs -d 'Number of jobs to run in parallel'
-complete -kxc rtx -n "$fssf shell" -l raw -d 'Directly pipe stdin/stdout/stderr from plugin to user Sets --jobs=1'
-complete -kxc rtx -n "$fssf shell" -a "(__rtx_tool_versions)" -d 'Tool(s) to use'
-complete -kxc rtx -n "$fssf shell" -s u -l unset -d 'Removes a previously set version'
-
-# sync
-set -l others node python
-complete -xc rtx -n "$fssf sync; and not $fssf $others" -a node -d 'Symlinks all tool versions from an external tool into rtx'
-complete -xc rtx -n "$fssf sync; and not $fssf $others" -a python -d 'Symlinks all tool versions from an external tool into rtx'
-
-# sync node
-complete -kxc rtx -n "$fssf sync; and $fssf node" -l brew -d 'Get tool versions from Homebrew'
-complete -kxc rtx -n "$fssf sync; and $fssf node" -l nodenv -d 'Get tool versions from nodenv'
-complete -kxc rtx -n "$fssf sync; and $fssf node" -l nvm -d 'Get tool versions from nvm'
-
-# sync python
-complete -kxc rtx -n "$fssf sync; and $fssf python" -l pyenv -d 'Get tool versions from pyenv'
-
-
-# task
-complete -kxc rtx -n "$fssf task" -l hidden -d 'Show hidden tasks'
-complete -kxc rtx -n "$fssf task" -l no-header -d 'Do not print table header'
-set -l others edit ls run
-complete -xc rtx -n "$fssf task; and not $fssf $others" -a edit -d '[experimental] Edit a task with $EDITOR'
-complete -xc rtx -n "$fssf task; and not $fssf $others" -a ls -d '[experimental] List available tasks to execute'
-complete -xc rtx -n "$fssf task; and not $fssf $others" -a run -d '[experimental] Run a task'
-
-# task edit
-complete -kxc rtx -n "$fssf task; and $fssf edit" -s p -l path -d 'Display the path to the task instead of editing it'
-complete -kxc rtx -n "$fssf task; and $fssf edit" -a "(__rtx_tasks)" -d 'Task to edit'
-
-# task ls
-complete -kxc rtx -n "$fssf task; and $fssf ls" -l hidden -d 'Show hidden tasks'
-complete -kxc rtx -n "$fssf task; and $fssf ls" -l no-header -d 'Do not print table header'
-
-# task run
-complete -kxc rtx -n "$fssf task; and $fssf run" -d 'Arguments to pass to the task. Use ":::" to separate tasks'
-complete -kxc rtx -n "$fssf task; and $fssf run" -s C -l cd -a "(__fish_complete_directories)" -d 'Change to this directory before executing the command'
-complete -kxc rtx -n "$fssf task; and $fssf run" -s n -l dry-run -d 'Don'\''t actually run the task(s), just print them in order of execution'
-complete -kxc rtx -n "$fssf task; and $fssf run" -s f -l force -d 'Force the task to run even if outputs are up to date'
-complete -kxc rtx -n "$fssf task; and $fssf run" -s i -l interleave -d 'Print directly to stdout/stderr instead of by line'
-complete -kxc rtx -n "$fssf task; and $fssf run" -s j -l jobs -d 'Number of tasks to run in parallel'
-complete -kxc rtx -n "$fssf task; and $fssf run" -s p -l prefix -d 'Print stdout/stderr by line, prefixed with the task'\''s label'
-complete -kxc rtx -n "$fssf task; and $fssf run" -s r -l raw -d 'Read/write directly to stdin/stdout/stderr instead of by line'
-complete -kxc rtx -n "$fssf task; and $fssf run" -a "(__rtx_tasks)" -d 'Task to run'
-complete -kxc rtx -n "$fssf task; and $fssf run" -s t -l tool -a "(__rtx_tool_versions)" -d 'Tool(s) to also add e.g.: node@20 python@3.10'
-
-
-# trust
-complete -kxc rtx -n "$fssf trust" -s a -l all -d 'Trust all config files in the current directory and its parents'
-complete -kxc rtx -n "$fssf trust" -a "(__fish_complete_path)" -d 'The config file to trust'
-complete -kxc rtx -n "$fssf trust" -l untrust -d 'No longer trust this config'
-
-# uninstall
-complete -kxc rtx -n "$fssf uninstall" -s a -l all -d 'Delete all installed versions'
-complete -kxc rtx -n "$fssf uninstall" -s n -l dry-run -d 'Do not actually delete anything'
-complete -kxc rtx -n "$fssf uninstall" -a "(__rtx_installed_tool_versions)" -d 'Tool(s) to remove'
-
-# upgrade
-complete -kxc rtx -n "$fssf upgrade" -s n -l dry-run -d 'Just print what would be done, don'\''t actually do it'
-complete -kxc rtx -n "$fssf upgrade" -s i -l interactive -d 'Display multiselect menu to choose which tools to upgrade'
-complete -kxc rtx -n "$fssf upgrade" -s j -l jobs -d 'Number of jobs to run in parallel'
-complete -kxc rtx -n "$fssf upgrade" -l raw -d 'Directly pipe stdin/stdout/stderr from plugin to user Sets --jobs=1'
-complete -kxc rtx -n "$fssf upgrade" -a "(__rtx_tool_versions)" -d 'Tool(s) to upgrade'
-
-# use
-complete -kxc rtx -n "$fssf use" -s e -l env -d 'Modify an environment-specific config file like .rtx.<env>.toml'
-complete -kxc rtx -n "$fssf use" -s f -l force -d 'Force reinstall even if already installed'
-complete -kxc rtx -n "$fssf use" -l fuzzy -d 'Save fuzzy version to config file'
-complete -kxc rtx -n "$fssf use" -s g -l global -d 'Use the global config file (~/.config/rtx/config.toml) instead of the local one'
-complete -kxc rtx -n "$fssf use" -s j -l jobs -d 'Number of jobs to run in parallel'
-complete -kxc rtx -n "$fssf use" -s p -l path -a "(__fish_complete_path)" -d 'Specify a path to a config file or directory If a directory is specified, it will look for .rtx.toml (default) or .tool-versions'
-complete -kxc rtx -n "$fssf use" -l pin -d 'Save exact version to config file'
-complete -kxc rtx -n "$fssf use" -l raw -d 'Directly pipe stdin/stdout/stderr from plugin to user Sets --jobs=1'
-complete -kxc rtx -n "$fssf use" -l remove -d 'Remove the tool(s) from config file'
-complete -kxc rtx -n "$fssf use" -a "(__rtx_tool_versions)" -d 'Tool(s) to add to config file'
-
-# version
-
-# watch
-complete -kxc rtx -n "$fssf watch" -d 'Extra arguments'
-complete -kxc rtx -n "$fssf watch" -s g -l glob -d 'Files to watch'
-complete -kxc rtx -n "$fssf watch" -s t -l task -a "(__rtx_tasks)" -d 'Task to run'
-
-# where
-complete -kxc rtx -n "$fssf where" -a "(__rtx_tool_versions)" -d 'Tool(s) to look up'
-
-# which
-complete -kxc rtx -n "$fssf which" -d 'The bin name to look up'
-complete -kxc rtx -n "$fssf which" -l plugin -a "(__rtx_plugins)" -d 'Show the plugin name instead of the path'
-complete -kxc rtx -n "$fssf which" -s t -l tool -a "(__rtx_tool_versions)" -d 'Use a specific tool@version'
-complete -kxc rtx -n "$fssf which" -l version -d 'Show the version instead of the path'
-
-
-
-function __rtx_all_plugins
-    if test -z "$__rtx_all_plugins_cache"
-        set -g __rtx_all_plugins_cache (rtx plugins ls --all)
-    end
-    for p in $__rtx_all_plugins_cache
-        echo $p
-    end
-end
-function __rtx_plugins
-    if test -z "$__rtx_plugins_cache"
-        set -g __rtx_plugins_cache (rtx plugins ls --core --user)
-    end
-    for p in $__rtx_plugins_cache
-        echo $p
-    end
-end
-function __rtx_tool_versions
-    if test -z "$__rtx_tool_versions_cache"
-        set -g __rtx_tool_versions_cache (rtx plugins --core --user) (rtx ls-remote --all | tac)
-    end
-    for tv in $__rtx_tool_versions_cache
-        echo $tv
-    end
-end
-function __rtx_installed_tool_versions
-    for tv in (rtx ls --installed | awk '{print $1 "@" $2}')
-        echo $tv
-    end
-end
-function __rtx_aliases
-    if test -z "$__rtx_aliases_cache"
-        set -g __rtx_aliases_cache (rtx alias ls | awk '{print $2}')
-    end
-    for a in $__rtx_aliases_cache
-        echo $a
-    end
-end
-function __rtx_tasks
-    for tv in (rtx task ls --no-header | awk '{print $1}')
-        echo $tv
-    end
-end
-function __rtx_settings
-    if test -z "$__rtx_settings_cache"
-        set -g __rtx_settings_cache (rtx settings ls | awk '{print $1}')
-    end
-    for s in $__rtx_settings_cache
-        echo $s
-    end
-end
-
-# vim: noet ci pi sts=0 sw=4 ts=4
+set _usage_spec_rtx 'name "rtx"
+bin "rtx"
+flag "--debug" help="Sets log level to debug" hide=true global=true
+flag "--log-level" help="Set the log output verbosity" hide=true global=true {
+    arg "<LEVEL>"
+}
+flag "--trace" help="Sets log level to trace" hide=true global=true
+flag "-C,--cd" help="Change directory before running command" global=true {
+    arg "<DIR>"
+}
+flag "-q,--quiet" help="Suppress non-error messages" global=true
+flag "-v,--verbose" help="Show extra output (use -vv for even more)" var=true global=true count=true
+flag "-y,--yes" help="Answer yes to all confirmation prompts" global=true
+cmd "activate" {
+    flag "-s,--shell" help="Shell type to generate the script for" hide=true {
+        arg "<SHELL>"
+    }
+    flag "--status" help="Show \"rtx: <PLUGIN>@<VERSION>\" message when changing directories"
+    flag "-q,--quiet" help="Suppress non-error messages"
+    arg "[SHELL_TYPE]" help="Shell type to generate the script for"
+}
+cmd "alias" {
+    alias "a"
+    alias "aliases" hide=true
+    flag "-p,--plugin" help="filter aliases by plugin" {
+        arg "<PLUGIN>"
+    }
+    flag "--no-header" help="Don\'t show table header"
+    cmd "get" {
+        arg "<PLUGIN>" help="The plugin to show the alias for"
+        arg "<ALIAS>" help="The alias to show"
+    }
+    cmd "ls" {
+        alias "list"
+        flag "--no-header" help="Don\'t show table header"
+        arg "[PLUGIN]" help="Show aliases for <PLUGIN>"
+    }
+    cmd "set" {
+        alias "add" "create"
+        arg "<PLUGIN>" help="The plugin to set the alias for"
+        arg "<ALIAS>" help="The alias to set"
+        arg "<VALUE>" help="The value to set the alias to"
+    }
+    cmd "unset" {
+        alias "rm" "remove" "delete" "del"
+        arg "<PLUGIN>" help="The plugin to remove the alias from"
+        arg "<ALIAS>" help="The alias to remove"
+    }
+}
+cmd "asdf" hide=true {
+    arg "[ARGS]..." help="all arguments" var=true
+}
+cmd "bin-paths"
+cmd "cache" {
+    cmd "clear" {
+        alias "c"
+        alias "clean" hide=true
+        arg "[PLUGIN]..." help="Plugin(s) to clear cache for e.g.: node, python" var=true
+    }
+}
+cmd "completion" {
+    alias "complete" "completions" hide=true
+    flag "-s,--shell" help="Shell type to generate completions for" hide=true {
+        arg "<SHELL_TYPE>"
+    }
+    arg "[SHELL]" help="Shell type to generate completions for"
+}
+cmd "config" {
+    alias "cfg"
+    flag "--no-header" help="Do not print table header"
+    cmd "ls" {
+        flag "--no-header" help="Do not print table header"
+    }
+    cmd "generate" {
+        alias "g"
+        flag "-o,--output" help="Output to file instead of stdout" {
+            arg "<OUTPUT>"
+        }
+    }
+}
+cmd "current" {
+    arg "[PLUGIN]" help="Plugin to show versions of e.g.: ruby, node"
+}
+cmd "deactivate"
+cmd "direnv" {
+    cmd "envrc" hide=true
+    cmd "exec" hide=true
+    cmd "activate"
+}
+cmd "doctor"
+cmd "env" {
+    alias "e"
+    flag "-s,--shell" help="Shell type to generate environment variables for" {
+        arg "<SHELL>"
+    }
+    flag "-J,--json" help="Output in JSON format"
+    arg "[TOOL@VERSION]..." help="Tool(s) to use" var=true
+}
+cmd "env-vars" {
+    flag "--file" help="The TOML file to update" long_help="The TOML file to update\n\nDefaults to RTX_DEFAULT_CONFIG_FILENAME environment variable, or \".rtx.toml\"." {
+        arg "<FILE>"
+    }
+    flag "--remove" help="Remove the environment variable from config file" long_help="Remove the environment variable from config file\n\nCan be used multiple times." var=true {
+        arg "<ENV_VAR>"
+    }
+    arg "[ENV_VARS]..." help="Environment variable(s) to set\ne.g.: NODE_ENV=production" var=true
+}
+cmd "exec" {
+    alias "x"
+    flag "-c,--command" help="Command string to execute" {
+        arg "<C>"
+    }
+    flag "-j,--jobs" help="Number of jobs to run in parallel\n[default: 4]" {
+        arg "<JOBS>"
+    }
+    flag "--raw" help="Directly pipe stdin/stdout/stderr from plugin to user Sets --jobs=1"
+    arg "[TOOL@VERSION]..." help="Tool(s) to start e.g.: node@20 python@3.10" var=true
+    arg "[COMMAND]..." help="Command string to execute (same as --command)" var=true
+}
+cmd "global" hide=true {
+    alias "g" hide=true
+    flag "--pin" help="Save exact version to `~/.tool-versions`\ne.g.: `rtx global --pin node@20` will save `node 20.0.0` to ~/.tool-versions"
+    flag "--fuzzy" help="Save fuzzy version to `~/.tool-versions`\ne.g.: `rtx global --fuzzy node@20` will save `node 20` to ~/.tool-versions\nthis is the default behavior unless RTX_ASDF_COMPAT=1"
+    flag "--remove" help="Remove the plugin(s) from ~/.tool-versions" var=true {
+        arg "<PLUGIN>"
+    }
+    flag "--path" help="Get the path of the global config file"
+    arg "[TOOL@VERSION]..." help="Tool(s) to add to .tool-versions\ne.g.: node@20\nIf this is a single tool with no version, the current value of the global\n.tool-versions will be displayed" var=true
+}
+cmd "hook-env" hide=true {
+    flag "-s,--shell" help="Shell type to generate script for" {
+        arg "<SHELL>"
+    }
+    flag "--status" help="Show \"rtx: <PLUGIN>@<VERSION>\" message when changing directories"
+    flag "-q,--quiet" help="Hide warnings such as when a tool is not installed"
+}
+cmd "hook-not-found" hide=true {
+    flag "-s,--shell" help="Shell type to generate script for" {
+        arg "<SHELL>"
+    }
+    arg "<BIN>" help="Attempted bin to run"
+}
+cmd "implode" {
+    flag "--config" help="Also remove config directory"
+    flag "-n,--dry-run" help="List directories that would be removed without actually removing them"
+}
+cmd "install" {
+    alias "i"
+    flag "-f,--force" help="Force reinstall even if already installed"
+    flag "-j,--jobs" help="Number of jobs to run in parallel\n[default: 4]" {
+        arg "<JOBS>"
+    }
+    flag "--raw" help="Directly pipe stdin/stdout/stderr from plugin to user Sets --jobs=1"
+    flag "-v,--verbose" help="Show installation output" var=true count=true
+    arg "[TOOL@VERSION]..." help="Tool(s) to install e.g.: node@20" var=true
+}
+cmd "latest" {
+    flag "-i,--installed" help="Show latest installed instead of available version"
+    arg "<TOOL@VERSION>" help="Tool to get the latest version of"
+    arg "[ASDF_VERSION]" help="The version prefix to use when querying the latest version same as the first argument after the \"@\" used for asdf compatibility" hide=true
+}
+cmd "link" {
+    alias "ln"
+    flag "-f,--force" help="Overwrite an existing tool version if it exists"
+    arg "<TOOL@VERSION>" help="Tool name and version to create a symlink for"
+    arg "<PATH>" help="The local path to the tool version\ne.g.: ~/.nvm/versions/node/v20.0.0"
+}
+cmd "local" hide=true {
+    alias "l" hide=true
+    flag "-p,--parent" help="Recurse up to find a .tool-versions file rather than using the current directory only\nby default this command will only set the tool in the current directory (\"$PWD/.tool-versions\")"
+    flag "--pin" help="Save exact version to `.tool-versions`\ne.g.: `rtx local --pin node@20` will save `node 20.0.0` to .tool-versions"
+    flag "--fuzzy" help="Save fuzzy version to `.tool-versions` e.g.: `rtx local --fuzzy node@20` will save `node 20` to .tool-versions This is the default behavior unless RTX_ASDF_COMPAT=1"
+    flag "--remove" help="Remove the plugin(s) from .tool-versions" var=true {
+        arg "<PLUGIN>"
+    }
+    flag "--path" help="Get the path of the config file"
+    arg "[TOOL@VERSION]..." help="Tool(s) to add to .tool-versions/.rtx.toml\ne.g.: node@20\nif this is a single tool with no version,\nthe current value of .tool-versions/.rtx.toml will be displayed" var=true
+}
+cmd "ls" {
+    alias "list"
+    flag "-p,--plugin" hide=true {
+        arg "<PLUGIN_FLAG>"
+    }
+    flag "-c,--current" help="Only show tool versions currently specified in a .tool-versions/.rtx.toml"
+    flag "-g,--global" help="Only show tool versions currently specified in a the global .tool-versions/.rtx.toml"
+    flag "-i,--installed" help="Only show tool versions that are installed Hides missing ones defined in .tool-versions/.rtx.toml but not yet installed"
+    flag "--parseable" help="Output in an easily parseable format" hide=true
+    flag "-J,--json" help="Output in json format"
+    flag "-m,--missing" help="Display missing tool versions"
+    flag "--prefix" help="Display versions matching this prefix" {
+        arg "<PREFIX>"
+    }
+    flag "--no-header" help="Don\'t display headers"
+    arg "[PLUGIN]..." help="Only show tool versions from [PLUGIN]" var=true
+}
+cmd "ls-remote" {
+    alias "list-all" "list-remote" hide=true
+    flag "--all" help="Show all installed plugins and versions"
+    arg "[TOOL@VERSION]" help="Plugin to get versions for"
+    arg "[PREFIX]" help="The version prefix to use when querying the latest version\nsame as the first argument after the \"@\""
+}
+cmd "outdated" {
+    arg "[TOOL@VERSION]..." help="Tool(s) to show outdated versions for\ne.g.: node@20 python@3.10\nIf not specified, all tools in global and local configs will be shown" var=true
+}
+cmd "plugins" {
+    alias "p"
+    alias "plugin" "plugin-list" hide=true
+    flag "-a,--all" help="list all available remote plugins" long_help="list all available remote plugins\n\nsame as `rtx plugins ls-remote`" hide=true
+    flag "-c,--core" help="The built-in plugins only\nNormally these are not shown"
+    flag "--user" help="List installed plugins" long_help="List installed plugins\n\nThis is the default behavior but can be used with --core\nto show core and user plugins"
+    flag "-u,--urls" help="Show the git url for each plugin\ne.g.: https://github.com/asdf-vm/asdf-node.git"
+    flag "--refs" help="Show the git refs for each plugin\ne.g.: main 1234abc" hide=true
+    cmd "install" {
+        alias "i" "a" "add"
+        flag "-f,--force" help="Reinstall even if plugin exists"
+        flag "-a,--all" help="Install all missing plugins\nThis will only install plugins that have matching shorthands.\ni.e.: they don\'t need the full git repo url"
+        flag "-v,--verbose" help="Show installation output" var=true count=true
+        arg "[NEW_PLUGIN]" help="The name of the plugin to install\ne.g.: node, ruby\nCan specify multiple plugins: `rtx plugins install node ruby python`"
+        arg "[GIT_URL]" help="The git url of the plugin"
+        arg "[REST]..." var=true hide=true
+    }
+    cmd "link" {
+        alias "ln"
+        flag "-f,--force" help="Overwrite existing plugin"
+        arg "<NAME>" help="The name of the plugin\ne.g.: node, ruby"
+        arg "[PATH]" help="The local path to the plugin\ne.g.: ./rtx-node"
+    }
+    cmd "ls" {
+        alias "list"
+        flag "-a,--all" help="List all available remote plugins\nSame as `rtx plugins ls-remote`" hide=true
+        flag "-c,--core" help="The built-in plugins only\nNormally these are not shown"
+        flag "--user" help="List installed plugins" long_help="List installed plugins\n\nThis is the default behavior but can be used with --core\nto show core and user plugins"
+        flag "-u,--urls" help="Show the git url for each plugin\ne.g.: https://github.com/asdf-vm/asdf-node.git"
+        flag "--refs" help="Show the git refs for each plugin\ne.g.: main 1234abc" hide=true
+    }
+    cmd "ls-remote" {
+        alias "list-remote" "list-all"
+        flag "-u,--urls" help="Show the git url for each plugin e.g.: https://github.com/rtx-plugins/rtx-nodejs.git"
+        flag "--only-names" help="Only show the name of each plugin by default it will show a \"*\" next to installed plugins"
+    }
+    cmd "uninstall" {
+        alias "remove" "rm"
+        flag "-p,--purge" help="Also remove the plugin\'s installs, downloads, and cache"
+        flag "-a,--all" help="Remove all plugins"
+        arg "[PLUGIN]..." help="Plugin(s) to remove" var=true
+    }
+    cmd "update" {
+        alias "upgrade"
+        flag "-j,--jobs" help="Number of jobs to run in parallel\nDefault: 4" {
+            arg "<JOBS>"
+        }
+        arg "[PLUGIN]..." help="Plugin(s) to update" var=true
+    }
+}
+cmd "prune" {
+    flag "-n,--dry-run" help="Do not actually delete anything"
+    arg "[PLUGIN]..." help="Prune only versions from these plugins" var=true
+}
+cmd "reshim" {
+    arg "[PLUGIN]" hide=true
+    arg "[VERSION]" hide=true
+}
+cmd "run" {
+    alias "r"
+    flag "-C,--cd" help="Change to this directory before executing the command" {
+        arg "<CD>"
+    }
+    flag "-n,--dry-run" help="Don\'t actually run the task(s), just print them in order of execution"
+    flag "-f,--force" help="Force the task to run even if outputs are up to date"
+    flag "-p,--prefix" help="Print stdout/stderr by line, prefixed with the task\'s label\nDefaults to true if --jobs > 1\nConfigure with `task_output` config or `RTX_TASK_OUTPUT` env var"
+    flag "-i,--interleave" help="Print directly to stdout/stderr instead of by line\nDefaults to true if --jobs == 1\nConfigure with `task_output` config or `RTX_TASK_OUTPUT` env var"
+    flag "-t,--tool" help="Tool(s) to also add e.g.: node@20 python@3.10" var=true {
+        arg "<TOOL@VERSION>"
+    }
+    flag "-j,--jobs" help="Number of tasks to run in parallel\n[default: 4]\nConfigure with `jobs` config or `RTX_JOBS` env var" {
+        arg "<JOBS>"
+    }
+    flag "-r,--raw" help="Read/write directly to stdin/stdout/stderr instead of by line\nConfigure with `raw` config or `RTX_RAW` env var"
+    arg "[TASK]" help="Task to run\nCan specify multiple tasks by separating with `:::`\ne.g.: rtx run task1 arg1 arg2 ::: task2 arg1 arg2" default="default"
+    arg "[ARGS]..." help="Arguments to pass to the task. Use \":::\" to separate tasks." var=true
+}
+cmd "self-update" {
+    flag "-f,--force" help="Update even if already up to date"
+    flag "--no-plugins" help="Disable auto-updating plugins"
+    flag "-y,--yes" help="Skip confirmation prompt"
+    arg "[VERSION]" help="Update to a specific version"
+}
+cmd "settings" {
+    cmd "get" {
+        arg "<SETTING>" help="The setting to show"
+    }
+    cmd "ls" {
+        alias "list"
+    }
+    cmd "set" {
+        alias "add" "create"
+        arg "<SETTING>" help="The setting to set"
+        arg "<VALUE>" help="The value to set"
+    }
+    cmd "unset" {
+        alias "rm" "remove" "delete" "del"
+        arg "<SETTING>" help="The setting to remove"
+    }
+}
+cmd "shell" {
+    alias "sh"
+    flag "-j,--jobs" help="Number of jobs to run in parallel\n[default: 4]" {
+        arg "<JOBS>"
+    }
+    flag "--raw" help="Directly pipe stdin/stdout/stderr from plugin to user Sets --jobs=1"
+    flag "-u,--unset" help="Removes a previously set version"
+    arg "[TOOL@VERSION]..." help="Tool(s) to use" var=true
+}
+cmd "sync" subcommand_required=true {
+    cmd "node" {
+        flag "--brew" help="Get tool versions from Homebrew"
+        flag "--nvm" help="Get tool versions from nvm"
+        flag "--nodenv" help="Get tool versions from nodenv"
+    }
+    cmd "python" {
+        flag "--pyenv" help="Get tool versions from pyenv" required=true
+    }
+}
+cmd "task" {
+    alias "t"
+    alias "tasks" hide=true
+    flag "--no-header" help="Do not print table header"
+    flag "--hidden" help="Show hidden tasks"
+    cmd "edit" {
+        flag "-p,--path" help="Display the path to the task instead of editing it"
+        arg "<TASK>" help="Task to edit"
+    }
+    cmd "ls" {
+        flag "--no-header" help="Do not print table header"
+        flag "--hidden" help="Show hidden tasks"
+    }
+    cmd "run" {
+        alias "r"
+        flag "-C,--cd" help="Change to this directory before executing the command" {
+            arg "<CD>"
+        }
+        flag "-n,--dry-run" help="Don\'t actually run the task(s), just print them in order of execution"
+        flag "-f,--force" help="Force the task to run even if outputs are up to date"
+        flag "-p,--prefix" help="Print stdout/stderr by line, prefixed with the task\'s label\nDefaults to true if --jobs > 1\nConfigure with `task_output` config or `RTX_TASK_OUTPUT` env var"
+        flag "-i,--interleave" help="Print directly to stdout/stderr instead of by line\nDefaults to true if --jobs == 1\nConfigure with `task_output` config or `RTX_TASK_OUTPUT` env var"
+        flag "-t,--tool" help="Tool(s) to also add e.g.: node@20 python@3.10" var=true {
+            arg "<TOOL@VERSION>"
+        }
+        flag "-j,--jobs" help="Number of tasks to run in parallel\n[default: 4]\nConfigure with `jobs` config or `RTX_JOBS` env var" {
+            arg "<JOBS>"
+        }
+        flag "-r,--raw" help="Read/write directly to stdin/stdout/stderr instead of by line\nConfigure with `raw` config or `RTX_RAW` env var"
+        arg "[TASK]" help="Task to run\nCan specify multiple tasks by separating with `:::`\ne.g.: rtx run task1 arg1 arg2 ::: task2 arg1 arg2" default="default"
+        arg "[ARGS]..." help="Arguments to pass to the task. Use \":::\" to separate tasks." var=true
+    }
+}
+cmd "trust" {
+    flag "-a,--all" help="Trust all config files in the current directory and its parents"
+    flag "--untrust" help="No longer trust this config"
+    arg "[CONFIG_FILE]" help="The config file to trust"
+}
+cmd "uninstall" {
+    alias "remove" "rm"
+    flag "-a,--all" help="Delete all installed versions"
+    flag "-n,--dry-run" help="Do not actually delete anything"
+    arg "[TOOL@VERSION]..." help="Tool(s) to remove" var=true
+}
+cmd "upgrade" {
+    alias "up"
+    flag "-n,--dry-run" help="Just print what would be done, don\'t actually do it"
+    flag "-j,--jobs" help="Number of jobs to run in parallel\n[default: 4]" {
+        arg "<JOBS>"
+    }
+    flag "-i,--interactive" help="Display multiselect menu to choose which tools to upgrade"
+    flag "--raw" help="Directly pipe stdin/stdout/stderr from plugin to user Sets --jobs=1"
+    arg "[TOOL@VERSION]..." help="Tool(s) to upgrade\ne.g.: node@20 python@3.10\nIf not specified, all current tools will be upgraded" var=true
+}
+cmd "usage" {
+    arg "[ARGS]..." var=true
+}
+cmd "use" {
+    alias "u"
+    flag "-f,--force" help="Force reinstall even if already installed"
+    flag "--fuzzy" help="Save fuzzy version to config file\ne.g.: `rtx use --fuzzy node@20` will save 20 as the version\nthis is the default behavior unless RTX_ASDF_COMPAT=1"
+    flag "-g,--global" help="Use the global config file (~/.config/rtx/config.toml) instead of the local one"
+    flag "-e,--env" help="Modify an environment-specific config file like .rtx.<env>.toml" {
+        arg "<ENV>"
+    }
+    flag "-j,--jobs" help="Number of jobs to run in parallel\n[default: 4]" {
+        arg "<JOBS>"
+    }
+    flag "--raw" help="Directly pipe stdin/stdout/stderr from plugin to user Sets --jobs=1"
+    flag "--remove" help="Remove the tool(s) from config file" var=true {
+        arg "<TOOL>"
+    }
+    flag "-p,--path" help="Specify a path to a config file or directory If a directory is specified, it will look for .rtx.toml (default) or .tool-versions" {
+        arg "<PATH>"
+    }
+    flag "--pin" help="Save exact version to config file\ne.g.: `rtx use --pin node@20` will save 20.0.0 as the version"
+    arg "[TOOL@VERSION]..." help="Tool(s) to add to config file\ne.g.: node@20\nIf no version is specified, it will default to @latest" var=true
+}
+cmd "version" {
+    alias "v" hide=true
+}
+cmd "watch" {
+    alias "w"
+    flag "-t,--task" help="Task to run" var=true {
+        arg "<TASK>"
+    }
+    flag "-g,--glob" help="Files to watch\nDefaults to sources from the task(s)" var=true {
+        arg "<GLOB>"
+    }
+    arg "[ARGS]..." help="Extra arguments" var=true
+}
+cmd "where" {
+    arg "<TOOL@VERSION>" help="Tool(s) to look up\ne.g.: ruby@3\nif \"@<PREFIX>\" is specified, it will show the latest installed version\nthat matches the prefix\notherwise, it will show the current, active installed version"
+    arg "[ASDF_VERSION]" help="the version prefix to use when querying the latest version\nsame as the first argument after the \"@\"\nused for asdf compatibility" hide=true
+}
+cmd "which" {
+    flag "--plugin" help="Show the plugin name instead of the path"
+    flag "--version" help="Show the version instead of the path"
+    flag "-t,--tool" help="Use a specific tool@version\ne.g.: `rtx which npm --tool=node@20`" {
+        arg "<TOOL@VERSION>"
+    }
+    arg "<BIN_NAME>" help="The bin name to look up"
+}
+cmd "render-completion" hide=true
+cmd "render-help" hide=true
+cmd "render-mangen" hide=true
+'
+complete -xc rtx -a '(@rtx usage -- complete-word -s "$_usage_spec_rtx" --ctoken=(commandline -t) -- (commandline -op))'

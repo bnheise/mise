@@ -49,6 +49,7 @@ mod task;
 mod trust;
 mod uninstall;
 mod upgrade;
+mod usage;
 mod r#use;
 pub mod version;
 mod watch;
@@ -96,6 +97,7 @@ pub enum Commands {
     Trust(trust::Trust),
     Uninstall(uninstall::Uninstall),
     Upgrade(upgrade::Upgrade),
+    Usage(usage::Usage),
     Use(r#use::Use),
     Version(version::Version),
     Watch(watch::Watch),
@@ -152,6 +154,7 @@ impl Commands {
             Self::Trust(cmd) => cmd.run(),
             Self::Uninstall(cmd) => cmd.run(),
             Self::Upgrade(cmd) => cmd.run(),
+            Self::Usage(cmd) => cmd.run(),
             Self::Use(cmd) => cmd.run(),
             Self::Version(cmd) => cmd.run(),
             Self::Watch(cmd) => cmd.run(),
@@ -174,6 +177,7 @@ impl Cli {
     pub fn command() -> clap::Command {
         Commands::augment_subcommands(
             clap::Command::new("rtx")
+                .bin_name("rtx")
                 .version(version::VERSION.to_string())
                 .about(env!("CARGO_PKG_DESCRIPTION"))
                 .author("Jeff Dickey <@jdx>")
@@ -195,6 +199,7 @@ impl Cli {
         *crate::env::ARGS.write().unwrap() = args.clone();
         shims::handle_shim()?;
         version::print_version_if_requested(args);
+        usage::display_usage(args);
 
         let matches = Self::command()
             .try_get_matches_from(args)

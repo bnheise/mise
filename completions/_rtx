@@ -53,6 +53,7 @@ _rtx() {
         (trust) __rtx_trust_cmd && ret=0 ;;
         (remove|rm|uninstall) __rtx_uninstall_cmd && ret=0 ;;
         (up|upgrade) __rtx_upgrade_cmd && ret=0 ;;
+        (usage) __rtx_usage_cmd && ret=0 ;;
         (u|use) __rtx_use_cmd && ret=0 ;;
         (v|version) __rtx_version_cmd && ret=0 ;;
         (w|watch) __rtx_watch_cmd && ret=0 ;;
@@ -821,6 +822,15 @@ __rtx_upgrade_cmd() {
     '*'{-v,--verbose}'[Show extra output (use -vv for even more)]' \
     '(-y --yes)'{-y,--yes}'[Answer yes to all confirmation prompts]'
 }
+(( $+functions[__rtx_usage_cmd] )) ||
+__rtx_usage_cmd() {
+  _arguments -s -S \
+     \
+    '(-C --cd)'{-C,--cd}'=[Change directory before running command]:cd:_directories' \
+    '(-q --quiet)'{-q,--quiet}'[Suppress non-error messages]' \
+    '*'{-v,--verbose}'[Show extra output (use -vv for even more)]' \
+    '(-y --yes)'{-y,--yes}'[Answer yes to all confirmation prompts]'
+}
 (( $+functions[__rtx_use_cmd] )) ||
 __rtx_use_cmd() {
   _arguments -s -S \
@@ -914,6 +924,7 @@ __rtx_cmds() {
     'trust:Marks a config file as trusted'
     {remove,rm,uninstall}':Removes runtime versions'
     {up,upgrade}':Upgrades outdated tool versions'
+    'usage:Run usage-cli'
     {u,use}':Change the active version of a tool locally or globally.'
     'version:Show rtx version'
     {w,watch}':\[experimental\] Run a task watching for changes'
